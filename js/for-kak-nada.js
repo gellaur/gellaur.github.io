@@ -11,6 +11,13 @@ function initengahan(){
     fotostiker.style="display:inline-flex;";setTimeout(ftmuncul,200);
     setTimeout(kethalo,500);
   }
+
+function showMenu() {
+    document.getElementById("menu").style.display = "block"; // Tampilkan menu
+  }
+  function showPage(page) {
+    alert("Navigating to " + page); // Contoh fungsi sederhana
+  }
   
   function ftmuncul(){
     if(ftganti==0){fotostiker.src = deffotostiker;}

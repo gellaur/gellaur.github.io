@@ -1,4 +1,4 @@
-function initengahan(){
+ion initengahan(){
     kadoIn.style="display:none";ket.style="display:none";
     Content.style = "opacity:1;margin-top:0";
     bodyblur.style="opacity:.7";
@@ -94,7 +94,7 @@ function showMenu() {
   },}).go();
   }
   function aktipesan4(){
-    wallpaper.style="transform: scale(1.5);";kalimat.innerHTML=pesan4.innerHTML +  " 🥳";kalimat.style="transform:scale(1.2)";setTimeout(aktipesan5,1000);
+    wallpaper.style="transform: scale(1.5);";kalimat.innerHTML=pesan4.innerHTML +  " ";kalimat.style="transform:scale(1.2)";setTimeout(aktipesan5,1000);
   }
   vketik5=pesan5.innerHTML;pesan5.innerHTML="";
   function aktipesan5(){

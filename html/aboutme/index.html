@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gellaur's Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+        }
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+            width: 80%;
+            max-width: 600px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .container.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .container.hide {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            background: #007bff;
+            color: white;
+            border-radius: 5px;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        img {
+            width: 100%;
+            height: auto;
+            margin-top: 10px;
+            border-radius: 5px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            width: 100%;
+            background-color: #000000;
+            padding: 20px 0;
+        }
+        .footer a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .footer a:hover {
+            color: #ff9999;
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="container show">
+            <h1>Welcome to My Page</h1>
+            <p>Click the button to change the background color!</p>
+            <button onclick="changeBackground()">Change Theme</button>
+            <button onclick="location.href='index-1.html'">Next</button>
+        </div>
+        
+        <!-- Additional 5 sections will be added here dynamically -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                const mainContainer = document.querySelector(".main-container");
+                const imageLinks = [
+                    "https://gellaur.github.io/image/sonaal-bangera-unslash.jpg",
+                    "https://gellaur.github.io/image/sonaal-bangera-unsplash2.jpg",
+                    "https://gellaur.github.io/image/sonaal-bangera-unplash.jpg",
+                    "https://gellaur.github.io/image/sonaal-bangera-unsplash4.jpg",
+                    "https://gellaur.github.io/image/sonaal-bangera-usplash.jpg"
+                ];
+
+                const sectionTitles = [
+                    "Section 1 - Introduction",
+                    "Section 2 - Nature Photography",
+                    "Section 3 - Urban Exploration",
+                    "Section 4 - Travel Diaries",
+                    "Section 5 - Portfolio"
+                ];
+
+                const nextLinks = [
+                    "section-1.html", // Link for section 1
+                    "section-2.html", // Link for section 2
+                    "section-3.html", // Link for section 3
+                    "section-4.html", // Link for section 4
+                    "section-5.html"  // Link for section 5
+                ];
+
+                for (let i = 0; i < 5; i++) {
+                    const section = document.createElement("div");
+                    section.className = "container hide";
+                    section.innerHTML = ` 
+                        <h2>${sectionTitles[i]}</h2>
+                        <p>Content for section ${i + 1}. Scroll down to reveal more!</p>
+                        <div class="image-placeholder">
+                            <img src="${imageLinks[i]}" alt="Image for section ${i + 1}">
+                        </div>
+                        <button onclick="location.href='${nextLinks[i]}'">Next</button>
+                    `;
+                    mainContainer.appendChild(section);
+                }
+                revealContainers();
+            });
+        </script>
+    </div>
+
+    <!-- Footer section with social media links -->
+    <div class="footer">
+        <a href="https://open.spotify.com/user/yl3wat3f4jyaebqs7e61ns9wl" target="_blank">Spotify</a>
+        <a href="https://twitter.com/gellaur" target="_blank">X</a>
+        <a href="https://instagram.com/yeojoha" target="_blank">Instagram</a>
+        <a href="https://tellonym.com/gellaur" target="_blank">Tellonym</a>
+    </div>
+
+    <script>
+        function changeBackground() {
+            const colors = ['#ff9999', '#99ccff', '#99ff99', '#ffff99', '#ffcc99'];
+            document.body.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        }
+
+        // Function to detect scroll and apply animation
+        function revealContainers() {
+            const containers = document.querySelectorAll('.container');
+            containers.forEach(container => {
+                const containerPosition = container.getBoundingClientRect().top;
+                const screenHeight = window.innerHeight;
+
+                // Show container when it is about to appear on the screen
+                if (containerPosition < screenHeight - 100 && containerPosition > 0) {
+                    container.classList.add('show');
+                    container.classList.remove('hide');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', revealContainers);
+        revealContainers(); // Ensure already visible sections are shown on load
+    </script>
+</body>
+</html>

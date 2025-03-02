@@ -1,1 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dinosaur Game</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background-color: #f7f7f7;
+        }
+        canvas {
+            display: block;
+            background-color: #f5f5f5;
+            margin: 0 auto;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid #000;
+        }
+        #score {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 24px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <div id="score">Score: 0</div>
 
+    <script>
+        const canvas = document.getElementById("gameCanvas");
+        const ctx = canvas.getContext("2d");
+
+        canvas.width = 800;
+        canvas.height = 200;
+
+        const dinoImage = new Image();
+        dinoImage.src = 'https://gellaur.github.io/image/wowo.jpg';  // Replace with actual dino image URL
+
+        const cactusImage = new Image();
+        cactusImage.src = 'https://gellaur.github.io/image/wowo.jpg';  // Replace with actual cactus image URL
+
+        const dino = {
+            x: 50,
+            y: 160,
+            width: 40,
+            height: 40,
+            velocityY: 0,
+            gravity: 0.8,
+            jumpPower: -15,
+            jumping: false,
+        };
+
+        const cactus = {
+            x: canvas.width,
+            y: 160,
+            width: 20,
+            height: 30,
+            speed: 6,
+        };
+
+        let score = 0;
+        let isGameOver = false;
+
+        function drawDino() {
+            ctx.drawImage(dinoImage, dino.x, dino.y, dino.width, dino.height);
+        }
+
+        function drawCactus() {
+            ctx.drawImage(cactusImage, cactus.x, cactus.y, cactus.width, cactus.height);
+        }
+
+        function updateCactus() {
+            cactus.x -= cactus.speed;
+            if (cactus.x + cactus.width < 0) {
+                cactus.x = canvas.width;
+                score++;
+                document.getElementById("score").textContent = "Score: " + score;
+            }
+        }
+
+        function updateDino() {
+            if (dino.jumping) {
+                dino.velocityY += dino.gravity;
+                dino.y += dino.velocityY;
+
+                if (dino.y >= 160) {
+                    dino.y = 160;
+                    dino.velocityY = 0;
+                    dino.jumping = false;
+                }
+            }
+        }
+
+        function detectCollision() {
+            if (dino.x + dino.width > cactus.x && dino.x < cactus.x + cactus.width && dino.y + dino.height > cactus.y) {
+                isGameOver = true;
+                document.getElementById("score").textContent = "Game Over! Final Score: " + score;
+            }
+        }
+
+        function jump() {
+            if (!dino.jumping) {
+                dino.jumping = true;
+                dino.velocityY = dino.jumpPower;
+            }
+        }
+
+        function gameLoop() {
+            if (isGameOver) return;
+
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            drawDino();
+            drawCactus();
+            updateCactus();
+            updateDino();
+            detectCollision();
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        window.addEventListener("keydown", function(event) {
+            if (event.key === " " || event.key === "ArrowUp") {
+                jump();
+            }
+        });
+
+        gameLoop();
+    </script>
+</body>
+</html>
